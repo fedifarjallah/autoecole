@@ -1,0 +1,95 @@
+{% extends '@autoEcole/Default/layout.html.twig' %}
+{% block title %}Mes Reservations{% endblock %}
+{% block login %}
+    {% if null != user %}
+        {% if user.roles[0] == "ROLE_ADMIN" %}
+            <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-primary display-4"
+                                                           href="{{ path('auto_ecole_admin_homepage') }}"><span
+                            class="mbri-key mbr-iconfont mbr-iconfont-btn"></span>
+                    Dashboard</a></div>
+        {% endif %}
+        <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-secondary display-4"
+                                                       href="{{ path('fos_user_security_logout') }}"><span
+                        class="mbri-key mbr-iconfont mbr-iconfont-btn"></span>
+                Logout</a></div>
+    {% else %}
+        <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-secondary display-4"
+                                                       href="{{ path('fos_user_security_login') }}"><span
+                        class="mbri-key mbr-iconfont mbr-iconfont-btn"></span>
+                Login</a></div>
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <section class="section-table cid-qXA87qa8E4" id="table1-6">
+
+
+        <div class="container container-table">
+            <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">
+                Mes Reservations
+            </h2>
+            {#<h3 class="mbr-section-subtitle mbr-fonts-style align-center pb-5 mbr-light display-5">#}
+                {#Click blue "Gear" icon in the top right corner to hide/show search and info, change the the table background#}
+                {#and other parameters. In browser click on the table head to sort the table, use search to filter the table.#}
+            {#</h3>#}
+            <div class="table-wrapper">
+                <div class="container">
+                    <div class="row search">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <div class="dataTables_filter">
+                                <label class="searchInfo mbr-fonts-style display-7">Search:</label>
+                                <input class="form-control input-sm" disabled="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container scroll">
+                    <table class="table isSearch" cellspacing="0">
+                        <thead>
+                        <tr class="table-heads ">
+                            <th class="head-item mbr-fonts-style display-7">
+                                Date Debut
+                            </th>
+                            <th class="head-item mbr-fonts-style display-7">
+                                Date Fin
+                            </th>
+                            <th class="head-item mbr-fonts-style display-7">
+                                Moniteur
+                            </th>
+                            <th class="head-item mbr-fonts-style display-7">
+                                Voiture
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for reservation in reservations %}
+                            <tr>
+                                <td class="body-item mbr-fonts-style display-7">{{ reservation.dateDebut | date("Y-m-d h:i") }}</td>
+                                <td class="body-item mbr-fonts-style display-7">{{ reservation.dateFin | date("Y-m-d h:i") }}</td>
+                                <td class="body-item mbr-fonts-style display-7">{{ reservation.moniteur.nom | capitalize }} {{ reservation.moniteur.prenom | capitalize }}</td>
+                                <td class="body-item mbr-fonts-style display-7">{{ reservation.voiture.marque }} {{ reservation.voiture.modele }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container table-info-container">
+                    <div class="row info">
+                        <div class="col-md-6">
+                            <div class="dataTables_info mbr-fonts-style display-7">
+                                <span class="infoBefore">Showing</span>
+                                <span class="inactive infoRows"></span>
+                                <span class="infoAfter">entries</span>
+                                <span class="infoFilteredBefore">(filtered from</span>
+                                <span class="inactive infoRows"></span>
+                                <span class="infoFilteredAfter"> total entries)</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

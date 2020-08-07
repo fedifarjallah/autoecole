@@ -1,0 +1,320 @@
+{% extends '@autoEcole/Default/layout.html.twig' %}
+{% block title %}Auto Ecole - Home{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('template/assets/datepicker/bootstrap-datetimepicker.min.css') }}">
+{% endblock %}
+{% block mes_reservations %}
+    {% if null != user %}
+        <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+            <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{{ path('auto_ecole_mes_reservations') }}"><span
+                            class="mbri-calendar mbr-iconfont mbr-iconfont-btn"></span>
+                    Mes réservations</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}
+{% block login %}
+    {% if null != user %}
+        {% if user.roles[0] == "ROLE_ADMIN" %}
+            <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-primary display-4"
+                                                           href="{{ path('auto_ecole_admin_homepage') }}"><span
+                            class="mbri-key mbr-iconfont mbr-iconfont-btn"></span>
+                    Dashboard</a></div>
+        {% endif %}
+        <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-secondary display-4"
+                                                       href="{{ path('fos_user_security_logout') }}"><span
+                        class="mbri-key mbr-iconfont mbr-iconfont-btn"></span>
+                Logout</a></div>
+    {% else %}
+        <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-secondary display-4"
+                                                       href="{{ path('fos_user_security_login') }}"><span
+                        class="mbri-key mbr-iconfont mbr-iconfont-btn"></span>
+                Login</a></div>
+    {% endif %}
+{% endblock %}
+{% block body %}
+    {% if user == null %}
+        <section class="cid-qTkA127IK8 mbr-fullscreen" data-bg-video="http://www.youtube.com/watch?v=Xd0Ok-MkqoE"
+                 id="header2-1">
+            <div class="mbr-overlay" style="opacity: 0.3; background-color: rgb(118, 118, 118);"></div>
+            <div class="container align-center">
+                <div class="row justify-content-md-center">
+                    <div class="mbr-white col-md-10">
+                        <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1">
+                            Auto Ecole TekUp
+                        </h1>
+
+                        <p class="mbr-text pb-3 mbr-fonts-style display-5">
+                            <b>Projet Symfony 3.4</b> </br>
+                            Realise par : <br/>
+                            Marwen Boulares<br/>
+                            Kawther Abdeltif<br/>
+                            Fedi Farjallah<br/>
+                            Alia Al-Nighaoui
+                        </p>
+                        <div class="mbr-section-btn">
+                            <a class="btn btn-md btn-white-outline display-4" target="_blank" href="http://tek-up.de/">A Propos Tek-Up</a>
+                            <a class="btn btn-md btn-secondary display-4" href="{{ path('fos_user_registration_register') }}">S&apos;inscrire</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
+                <a href="#next">
+                    <i class="mbri-down mbr-iconfont"></i>
+                </a>
+            </div>
+        </section>
+    {% else %}
+        <section class="mbr-section content4 cid-qXA75J5pHg" id="content4-4">
+
+            {#<div id="myModal" class="modal fade" role="dialog">#}
+                {#<div class="modal-dialog">#}
+
+                    {#<!-- Modal content-->#}
+                    {#<div class="modal-content">#}
+                        {#<div class="modal-header">#}
+                            {#<button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                        {#</div>#}
+                        {#<div class="modal-body">#}
+                            {#<p>Donner une note.</p>#}
+                        {#</div>#}
+                        {#<div class="modal-footer">#}
+                            {#<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                {#</div>#}
+            {#</div>#}
+
+            <div class="container">
+                <form method="post" action="{{ path('auto_ecole_reserver') }}">
+                <div class="media-container-row">
+                    <div class="title col-12 col-md-8">
+                        <br>
+                        <br>
+                        <h2 class="align-center pb-3 mbr-fonts-style display-2">
+                            Réserver Maintenant {{ 4|rating }}
+                        </h2>
+                        <div id="mainDiv">
+                            <br>
+                            <br>
+                            <center>
+                                    <div class="col-md-5">
+                                        <select id="sel_marque" class="custom-select" name="marque"></select>
+                                        <br>
+                                        <br>
+                                        <select id="sel_modele" class="custom-select" name="modele"></select>
+                                    </div>
+                            </center>
+                            <br><br>
+                            <center>
+                                <span class="badge badge-danger" id="info" style="font-size: large"></span>
+                                <br>
+                                <br>
+                                <button id="submitButton" type="submit" class="btn btn-sm btn-secondary display-4"
+                                        disabled>Suivant
+                                </button>
+                            </center>
+                        </div>
+                        <div class="row col-md-12" id="secondDiv" style="display: none">
+                            <center>
+                                <div class="col-md-12">
+                                    <div class="col-md-8">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" class="form-control" id="dateDebut" name="dateChoisie" readonly>
+                                            <span class="add-on"><i class="icon-remove"></i></span>
+                                            <span class="add-on"><i class="icon-calendar"></i></span>
+                                        </div>
+                                        <br>
+                                        <input type="number" class="form-control" value="1" min="1" max="3" id="nombreHeures" name="nombreHeures" required/>
+                                        <br>
+                                    <button id="submitButton2" type="submit" class="btn btn-sm btn-secondary display-4" disabled>
+                                        Suivant
+                                    </button>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-8">
+                                        <h6 style="color: #ff3366">
+                                            La voiture sélectionnée est indisponible dans ces dates là
+                                        </h6>
+                                        <table class="table table-bordered" id="horaireTable">
+                                            <thead>
+                                            <tr style="color: #ff3366;">
+                                                <th>Du</th>
+                                                <th>à</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+
+                        <div class="row col-md-12" id="thirdDiv" style="display: none">
+                            <center>
+                                <select id="sel_moniteur" class="custom-select" name="moniteur"></select>
+                                <br>
+                                <br>
+                                <button id="submitButton3" type="submit" class="btn btn-sm btn-secondary display-4" disabled>
+                                    Terminer
+                                </button>
+                            </center>
+                        </div>
+
+                    </div>
+                </div>
+                </form>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+{% block scripts %}
+    <script src="{{ asset('template/assets/momentjs/moment.js') }}"></script>
+    <script src="{{ asset('template/assets/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript">
+        $(".form_datetime").datetimepicker({
+            format: "dd MM yyyy hh:ii",
+            autoclose: true,
+            startDate: "{{ date("now") | date_modify("+1 Hour") | date("Y-m-d h:i") }}",
+            minuteStep: 30
+        });
+        $("#dateDebut").on("change", function() {
+            $("#submitButton2").removeAttr("disabled");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://localhost/autoEcole/web/app_dev.php/marques',
+                type: 'get',
+                dataType: 'json',
+                error: function (error) {
+                    $("#info").empty();
+                    $("#submitButton").attr("disabled", "disabled");
+                },
+                success: function (response) {
+                    $("#info").empty();
+                    $("#submitButton").attr("disabled", "disabled");
+                    var len = response.length;
+
+                    $("#sel_marque").empty();
+                    $("#sel_marque").append("<option>-Choisir une marque-</option>");
+                    for (var i = 0; i < len; i++) {
+                        var marque = response[i]['marque'];
+                        $("#sel_marque").append("<option value='" + marque + "'>" + marque + "</option>");
+                    }
+                }
+            });
+
+            $("#sel_marque").change(function () {
+                var marque = $(this).val();
+                $.ajax({
+                    url: 'http://localhost/autoEcole/web/app_dev.php/modeles/' + marque,
+                    type: 'get',
+                    dataType: 'json',
+                    error: function (error) {
+                        $("#info").empty();
+                        $("#submitButton").attr("disabled", "disabled");
+                    },
+                    success: function (response) {
+                        $("#info").empty();
+                        $("#submitButton").attr("disabled", "disabled");
+                        var len = response.length;
+                        $("#sel_modele").empty();
+                        $("#sel_modele").append("<option>-Choisir un modele-</option>");
+                        for (var i = 0; i < len; i++) {
+                            var modele = response[i]['modele'];
+                            $("#info").empty();
+                            $("#sel_modele").append("<option value='" + modele + "'>" + modele + "</option>");
+                        }
+                    }
+                });
+            });
+
+            $("#sel_modele").change(function () {
+                var modele = $(this).val();
+                $.ajax({
+                    url: 'http://localhost/autoEcole/web/app_dev.php/marque/modele/' + modele,
+                    type: 'get',
+                    dataType: 'json',
+                    error: function (error) {
+                        $("#info").empty();
+                        $("#submitButton").attr("disabled", "disabled");
+                    },
+                    success: function (response) {
+                        $("#submitButton").removeAttr("disabled");
+                        $("#info").empty();
+                        $("#horaireTable > tbody").html("");
+                        $("#info").append("Couleur " + response.couleur + " et Coùte " + response.prix + " DT/Heure");
+
+                        //Horaire
+                        $.ajax({
+                            type: "get",
+                            url: "http://localhost/autoEcole/web/app_dev.php/horaire/"+modele,
+                            dataType: "json",
+                            success: function(response){
+                                jQuery.each(response, function(i,data) {
+                                    console.log(data.dateDebut.toString());
+                                    $("#horaireTable").append("<tr style='color: white;'><td>" + data.dateDebut.toString() + "</td><td>"+data.dateFin+"</td></tr>");
+                                });
+                            }
+                        });
+
+                    }
+                });
+            });
+
+            $("#submitButton").click(function (e) {
+                e.preventDefault();
+                $("#mainDiv").hide();
+                $("#secondDiv").show();
+            });
+
+            $("#submitButton2").click(function (e) {
+                e.preventDefault();
+                $("#secondDiv").hide();
+                //populate sel_moniteur with monitors that are available at that time
+                $.ajax({
+                    url: 'http://localhost/autoEcole/web/app_dev.php/moniteurDispo/'+$("#dateDebut").val()+'/'+$("#nombreHeures").val(),
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (response) {
+                        // $("#submitButton3").removeAttr("disabled");
+                        var len = response.length;
+
+                        $("#sel_moniteur").empty();
+                        $("#sel_moniteur").append("<option>-Choisir un moniteur-</option>");
+                        for (var i = 0; i < len; i++) {
+                            var id = response[i]['id'];
+                            var nom = response[i]['nom'];
+                            var prenom = response[i]['prenom'];
+                            $("#sel_moniteur").append("<option value='" + id + "'>" + nom +" "+ prenom + "</option>");
+                        }
+                    }
+                });
+
+                $("#thirdDiv").show();
+            });
+
+            $("#sel_moniteur").change(function () {
+                var moniteur = $(this).val();
+                if(moniteur==="-Choisir un moniteur-"){
+                    $("#submitButton3").attr("disabled", "disabled");
+                }
+                else
+                    $("#submitButton3").removeAttr("disabled");
+            });
+        });
+    </script>
+    {#{% if null != user %}#}
+        {#<script>#}
+            {#$(document).ready(function () {#}
+                {#$('#myModal').modal({ show: false})#}
+            {#});#}
+        {#</script>#}
+    {#{% endif %}#}
+{% endblock %}

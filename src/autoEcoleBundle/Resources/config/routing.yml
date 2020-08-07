@@ -1,0 +1,24 @@
+auto_ecole_homepage:
+    path:     /
+    defaults: { _controller: autoEcoleBundle:Default:index }
+auto_ecole_marques:
+    path:     /marques
+    defaults: { _controller: autoEcoleBundle:Default:getMarques }
+auto_ecole_modeles:
+    path:     /modeles/{marque}
+    defaults: { _controller: autoEcoleBundle:Default:getModeles }
+auto_ecole_horaire:
+    path:     /horaire/{modele}
+    defaults: { _controller: autoEcoleBundle:Default:horaire }
+auto_ecole_moniteurs_disponibles:
+    path:     /moniteurDispo/{datedebut}/{nombreheure}
+    defaults: { _controller: autoEcoleBundle:Default:moniteurDispo }
+auto_ecole_voiture:
+    path:     /marque/modele/{modele}
+    defaults: { _controller: autoEcoleBundle:Default:getInfoByModele }
+auto_ecole_reserver:
+    path:     /reserver
+    defaults: { _controller: autoEcoleBundle:Default:reserver }
+auto_ecole_mes_reservations:
+    path:     /reservations
+    defaults: { _controller: autoEcoleBundle:Default:mesReservations }

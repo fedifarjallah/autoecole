@@ -1,0 +1,30 @@
+auto_ecole_admin_homepage:
+    path:     /
+    defaults: { _controller: autoEcoleAdminBundle:Default:index }
+auto_ecole_admin_voiture_ajouter:
+    path:     /voiture/ajouter
+    defaults: { _controller: autoEcoleAdminBundle:Default:addVoiture }
+auto_ecole_admin_voiture_liste:
+    path:     /voiture/liste
+    defaults: { _controller: autoEcoleAdminBundle:Default:listVoiture }
+auto_ecole_admin_voiture_supprimer:
+    path:     /voiture/supprimer/{id}
+    defaults: { _controller: autoEcoleAdminBundle:Default:deleteVoiture }
+auto_ecole_admin_voiture_modifier:
+    path:     /voiture/modifier/{id}
+    defaults: { _controller: autoEcoleAdminBundle:Default:updateVoiture }
+auto_ecole_admin_moniteur_supprimer:
+    path:     /moniteur/supprimer/{id}
+    defaults: { _controller: autoEcoleAdminBundle:Default:deleteMoniteur }
+auto_ecole_admin_moniteur_liste:
+    path:     /moniteur/liste
+    defaults: { _controller: autoEcoleAdminBundle:Default:listMoniteur }
+auto_ecole_admin_moniteur_ajouter:
+    path:     /moniteur/ajouter
+    defaults: { _controller: autoEcoleAdminBundle:Default:addMoniteur }
+auto_ecole_admin_moniteur_modifier:
+    path:     /moniteur/modifier/{id}
+    defaults: { _controller: autoEcoleAdminBundle:Default:updateMoniteur }
+auto_ecole_admin_entrainement_liste:
+    path:     /entrainement/liste
+    defaults: { _controller: autoEcoleAdminBundle:Default:listEntrainement }

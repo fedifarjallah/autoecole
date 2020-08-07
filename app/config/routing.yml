@@ -1,0 +1,14 @@
+auto_ecole_admin:
+    resource: "@autoEcoleAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+auto_ecole:
+    resource: "@autoEcoleBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

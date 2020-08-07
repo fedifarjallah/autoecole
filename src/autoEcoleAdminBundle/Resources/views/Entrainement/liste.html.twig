@@ -1,0 +1,69 @@
+{% extends '@autoEcoleAdmin/Default/index.html.twig' %}
+{% block stylesheets %}
+    <!-- DataTables CSS -->
+    <link href="{{ asset('admin_template/css/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{{ asset('admin_template/css/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Liste des Réservations</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-bordered" id="dataTables-entraienements">
+                            <thead>
+                            <tr>
+                                <th>dateDebut</th>
+                                <th>dateFin</th>
+                                <th>moniteur</th>
+                                <th>user</th>
+                                <th>voiture</th>
+                                <th>Durée</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entrainement in entrainements %}
+                                <tr class="{% if entrainement.dateFin < date('now') %}bg-danger{% elseif entrainement.dateFin > date('now') and entrainement.dateDebut < date('now') %}bg-success{% endif %}">
+                                    <td>{{ entrainement.dateDebut | date('d/m/y H:i') }}</td>
+                                    <td>{{ entrainement.dateFin | date('d/m/y H:i') }}</td>
+                                    <td>{{ entrainement.moniteur.nom | capitalize }} {{ entrainement.moniteur.prenom | capitalize }}</td>
+                                    <td>{{ entrainement.user.username | capitalize }}</td>
+                                    <td>{{ entrainement.voiture.marque }} {{ entrainement.voiture.modele }}</td>
+                                    <td>{{ entrainement.nombreHeure }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+{% endblock %}
+{% block scripts %}
+    <!-- DataTables JavaScript -->
+    <script src="{{ asset('admin_template/js/dataTables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin_template/js/dataTables/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-entraienements').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}
+
